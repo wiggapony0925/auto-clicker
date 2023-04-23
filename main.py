@@ -1,2 +1,6 @@
 import pyautogui
-from tkinter import *
+import PySimpleGUI as pg 
+
+#WINDOW CREATION 
+
+
