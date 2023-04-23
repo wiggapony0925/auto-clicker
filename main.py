@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
 import subprocess
+import autoclicker
 
 #WINDOW CREATION 
 sg.theme('DarkAmber')
