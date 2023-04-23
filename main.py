@@ -1,6 +1,5 @@
 import PySimpleGUI as sg
 import subprocess
-import autoclicker
 
 #WINDOW CREATION 
 sg.theme('DarkAmber')
@@ -47,5 +46,3 @@ while True:
         sg.popup('Help message goes here', title='Help')
     elif event == 'set_position':
         window['current_position'].update('X: {}, Y: {}'.format(values['x'], values['y']))
-        
-window.close()
