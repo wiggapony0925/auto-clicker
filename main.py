@@ -14,7 +14,9 @@ layout = [
      sg.Radio('Left', 'click_type', default=True, key='click_left'), 
      sg.Radio('Right', 'click_type', key='click_right')],
     [sg.Text('Click Interval (Seconds)', font=('Helvetica', 14)), 
-     sg.Input(default_text='0.1', key='click_interval', size=(10, 1))],
+     sg.Input(default_text='R', key='click_interval', size=(10, 1))],
+    [sg.Text('Key', font=('Helvetica', 14)),
+     sg.Input(default_text='0.1', key='Key', size=(10, 1))], 
     [sg.Text('Time Speed', font=('Helvetica', 14)), 
      sg.Slider(range=(1, 10), default_value=1, orientation='h', size=(20, 15), key='time_speed')],
     [sg.HorizontalSeparator()],
@@ -42,6 +44,7 @@ while True:
         subprocess.Popen(['python', 'autoclicker.py', 
                           '--click_type', click_type, 
                           '--click_interval', values['click_interval'],
+                          '--key', values['Keys'],
                           '--time_speed', str(values['time_speed'])])
     elif event == 'help':
         sg.popup('Help message goes here', title='Help')
