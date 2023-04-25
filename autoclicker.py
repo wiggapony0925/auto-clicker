@@ -15,12 +15,14 @@ parser.add_argument('--key', type=str, default="r", help='Specify the key')
 parser.add_argument('--time_speed', type=int, default=1, help='Specify the time speed')
 args = parser.parse_args()
 
-#some
-delay = 0.1 
-button = Button.left 
-start_stop_key = KeyCode(char='r') #ipnut for gui 
+#auto clicker
 
-
-class user_settings: 
-    def __init__(self, buttons):
-        self.buttons = buttons
+class AutoClicker:
+      def __init__(self, click_type: str, click_interval: float, key: Optional[str], time_speed: int):
+        self.click_type = click_type
+        self.click_interval = click_interval
+        self.key = key
+        self.time_speed = time_speed
+        self.stop_event = threading.Event()
+        self.mouse = Controller()
+        self.keyboard = KeyboardController()
