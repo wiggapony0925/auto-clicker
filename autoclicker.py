@@ -26,3 +26,21 @@ class AutoClicker:
         self.stop_event = threading.Event()
         self.mouse = Controller()
         self.keyboard = KeyboardController()
+
+      def start_clicking(self):
+        def click():
+            while not self.stop_event.is_set():
+                if self.click_type == 'left':
+                    self.mouse.click(Button.left)
+                elif self.click_type == 'right':
+                    self.mouse.click(Button.right)
+                if self.key:
+                    self.keyboard.press(self.key)
+                    time.sleep(0.01 * self.time_speed)
+                    self.keyboard.release(self.key)
+                time.sleep(self.click_interval * self.time_speed)
+
+        threading.Thread(target=click, daemon=True).start()
+
+        def stop_clicking(self):
+            self.stop_event.set()
