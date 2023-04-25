@@ -10,15 +10,15 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--click_type', type=str, default='left', help='Specify the click type')
-parser.add_argument('--click_interval', type=float, default=1.0, help='Specify the click interval (in seconds)')
+parser.add_argument('--click_interval', type=float, default=0.1, help='Specify the click interval (in seconds)')
 parser.add_argument('--key', type=str, default="r", help='Specify the key')
-parser.add_argument('--time_speed', type=int, default=1, help='Specify the time speed')
+parser.add_argument('--time_speed', type=float, default=1, help='Specify the time speed')
 args = parser.parse_args()
 
 #auto clicker
 
 class AutoClicker:
-      def __init__(self, click_type: str, click_interval: float, key: Optional[str], time_speed: int):
+    def __init__(self, click_type: str, click_interval: float, key: Optional[str], time_speed: float):
         self.click_type = click_type
         self.click_interval = click_interval
         self.key = key
@@ -27,7 +27,7 @@ class AutoClicker:
         self.mouse = Controller()
         self.keyboard = KeyboardController()
 
-      def start_clicking(self):
+    def start_clicking(self):
         def click():
             while not self.stop_event.is_set():
                 if self.click_type == 'left':
@@ -42,5 +42,5 @@ class AutoClicker:
 
         threading.Thread(target=click, daemon=True).start()
 
-        def stop_clicking(self):
-            self.stop_event.set()
+    def stop_clicking(self):
+        self.stop_event.set()
