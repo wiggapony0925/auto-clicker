@@ -1,11 +1,18 @@
 import PySimpleGUI as sg
 import subprocess
-import autoclicker
-
+import argparse
+from autoclicker import AutoClicker
 #WINDOW CREATION 
 sg.theme('DarkAmber')
 #sg.Window(title="AUTO CLICKER", layout=[[]], margins=(250,350)).read()
 
+# Parse command line arguments
+parser = argparse.ArgumentParser()
+parser.add_argument('--click_type', type=str, default='left', help='Specify the click type')
+parser.add_argument('--click_interval', type=float, default=0.1, help='Specify the click interval (in seconds)')
+parser.add_argument('--key', type=str, default="r", help='Specify the key')
+parser.add_argument('--time_speed', type=float, default=1, help='Specify the time speed')
+args = parser.parse_args()
 
 layout = [
     [sg.Text('Auto Clicker', font=('Helvetica', 25), justification='center')],
@@ -14,9 +21,9 @@ layout = [
      sg.Radio('Left', 'click_type', default=True, key='click_left'), 
      sg.Radio('Right', 'click_type', key='click_right')],
     [sg.Text('Click Interval (Seconds)', font=('Helvetica', 14)), 
-     sg.Input(default_text='R', key='click_interval', size=(10, 1))],
+     sg.Input(default_text=0.1, key='click_interval', size=(10, 1))],
     [sg.Text('Key', font=('Helvetica', 14)),
-     sg.Input(default_text='0.1', key='Key', size=(10, 1))], 
+     sg.Input(default_text='R', key='Key', size=(10, 1))], 
     [sg.Text('Time Speed', font=('Helvetica', 14)), 
      sg.Slider(range=(1, 10), default_value=1, orientation='h', size=(20, 15), key='time_speed')],
     [sg.HorizontalSeparator()],
@@ -34,9 +41,11 @@ layout = [
 # Create the window
 window = sg.Window('Auto Clicker', layout, size=(500, 400), element_justification='c')
 
+#instance 
+#autoclicker = AutoClicker(click_type, float(click_interval), key, int(time_speed))
 # Loop to handle user input
 while True:
-    event, values = window.Read()
+    event, values = window.read()
     if event == sg.WIN_CLOSED or event == 'quit':
         break
     elif event == 'start_stop':
@@ -44,9 +53,12 @@ while True:
         subprocess.Popen(['python', 'autoclicker.py', 
                           '--click_type', click_type, 
                           '--click_interval', values['click_interval'],
-                          '--key', values['Keys'],
+                          '--key', values['Key'],
                           '--time_speed', str(values['time_speed'])])
     elif event == 'help':
         sg.popup('Help message goes here', title='Help')
     elif event == 'set_position':
         window['current_position'].update('X: {}, Y: {}'.format(values['x'], values['y']))
+
+
+window.close()
